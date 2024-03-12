@@ -1,17 +1,45 @@
 <MainScreen>
-    MDTopAppBar:
-        type: "small"
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            type: "small"
 
-        MDTopAppBarLeadingButtonContainer:
+            MDTopAppBarLeadingButtonContainer:
 
-            MDActionTopAppBarButton:
-                icon: "menu"
+                MDActionTopAppBarButton:
+                    icon: "menu"
 
-        MDTopAppBarTitle:
-            text: "AppBar Center-aligned"
-            pos_hint: {"center_x": .5}
+            MDTopAppBarTitle:
+                text: "Задачи"
+                pos_hint: {"center_x": .5}
 
-        MDTopAppBarTrailingButtonContainer:
+            MDTopAppBarTrailingButtonContainer:
 
-            MDActionTopAppBarButton:
-                icon: "account-circle-outline"
+                MDActionTopAppBarButton:
+                    icon: "dots-vertical"
+
+        MDDivider:
+            size_hint_x: 1
+            pos_hint: {'center_x': .5, 'center_y': .5}
+        MDFloatLayout:
+            MDScrollView:
+                do_scroll_x:False
+                do_scroll_y:True
+                MDList :
+                    id:list 
+                    MDListItem:
+
+                        MDListItemHeadlineText:
+                            text: "ToDo1"
+
+                        MDListItemSupportingText:
+                            text: "Supporting text"
+
+                        MDListItemTrailingCheckbox:
+                    
+                    MDWidget:
+            MDIconButton:
+                icon: "plus"
+                style: "filled"
+                pos: root.width-1.5*self.width,self.height//2
+                on_release: root.show
