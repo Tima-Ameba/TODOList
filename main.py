@@ -1,11 +1,6 @@
-from kivymd.app import MDApp
+from kivymd.app import MDApp 
 from kivymd.uix.screen import MDScreen
 from kivy.lang.builder import Builder
-from kivy.lang import Builder
-from kivy.uix.widget import Widget
-
-from kivymd.app import MDApp
-from kivymd.uix.button import MDButton, MDButtonText
 from kivymd.uix.dialog import (
     MDDialog,
     MDDialogIcon,
@@ -19,28 +14,66 @@ from kivymd.uix.list import (
     MDListItem,
     MDListItemLeadingIcon,
     MDListItemSupportingText,
+    MDListItemHeadlineText,
+    MDListItemTrailingCheckbox
 )
+from kivymd.uix.button import MDButton, MDButtonText
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivy.uix.widget import Widget
 Builder.load_file("main.kv")
 
-class MainScreen(MDScreen):
-    def show_dialog
-    MDDialog(
-            title="Discard draft?",
-            text="This will reset your device to its default factory settings.",
-            buttons=[
-                MDFlatButton(
-                    text="CANCEL",
-                    theme_text_color="Custom",
-                    text_color=self.theme_cls.primary_color,
-                ),
-                MDFlatButton(
-                    text="DISCARD",
-                    theme_text_color="Custom",
-                    text_color=self.theme_cls.primary_color,
-                ),
-            ],
-        ).open()
 
+class MyContent(MDDialogContentContainer):
+    pass
+
+class MainScreen(MDScreen):
+    def show_dialog(self):
+        self.content=MyContent()
+        self.dialog=MDDialog(
+            # ----------------------------Icon-----------------------------
+            MDDialogIcon(
+                icon="book-plus-multiple-outline",
+            ),
+            # -----------------------Headline text-------------------------
+            MDDialogHeadlineText(
+                text="Добавить задачу",
+            ),
+            # -----------------------Custom content------------------------
+            self.content,
+            # ---------------------Button container------------------------
+            MDDialogButtonContainer(
+                Widget(),
+                MDButton(
+                    MDButtonText(text="Отмена"),
+                    style="text",
+                    on_release=lambda x: self.dialog.dismiss(),
+                ),
+                MDButton(
+                    MDButtonText(text="Добавить"),
+                    style="text",
+                    on_release=lambda x:self.add()
+                ),
+                spacing="8dp",
+            ),
+            # -------------------------------------------------------------
+        )
+        self.dialog.open()
+    def add(self):
+        text1=self.content.ids.todotext.text
+        text2=self.content.ids.todotext_two.text
+        l=MDListItem(
+            MDListItemHeadlineText(
+                text=text1,
+            ),
+            MDListItemSupportingText(
+                text=text2,
+            ),
+            MDListItemTrailingCheckbox(
+            ),
+        )
+        l.radius=l.height//2
+        self.ids.list.add_widget(l)
+        self.dialog.dismiss()
 class MyToDoList(MDApp):
     def build(self):
         return MainScreen()

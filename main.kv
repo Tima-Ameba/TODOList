@@ -1,13 +1,33 @@
+<MyContent>
+    orientation: "vertical"
+    spacing:5
+    MDDivider:
+    MDTextField:
+        id:todotext
+        mode:"filled"
+        MDTextFieldHintText:
+            text:"Введите задачу"
+        MDTextFieldHintText:
+            text:"Поле обязательное"
+            text:"Введите задачу"
+    MDDivider:
+    MDTextField:
+        id:todotext_two
+        mode: "outlined"
+        multiline:True
+        MDTextFieldHintText:
+            pos_hint:{"x_center":.3,"y_center":1}
+
 <MainScreen>
     MDBoxLayout:
-        orientation: 'vertical'
+        orientation: "vertical"
         MDTopAppBar:
             type: "small"
 
             MDTopAppBarLeadingButtonContainer:
 
                 MDActionTopAppBarButton:
-                    icon: "menu"
+                    icon: "account-circle-outline"
 
             MDTopAppBarTitle:
                 text: "Задачи"
@@ -27,19 +47,9 @@
                 do_scroll_y:True
                 MDList :
                     id:list 
-                    MDListItem:
 
-                        MDListItemHeadlineText:
-                            text: "ToDo1"
-
-                        MDListItemSupportingText:
-                            text: "Supporting text"
-
-                        MDListItemTrailingCheckbox:
-                    
-                    MDWidget:
             MDIconButton:
                 icon: "plus"
                 style: "filled"
                 pos: root.width-1.5*self.width,self.height//2
-                on_release: root.show
+                on_release: root.show_dialog()
