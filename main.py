@@ -21,7 +21,7 @@ from kivymd.uix.button import MDButton, MDButtonText
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.uix.widget import Widget
 Builder.load_file("main.kv")
-
+import json
 
 class MyContent(MDDialogContentContainer):
     pass
@@ -58,9 +58,15 @@ class MainScreen(MDScreen):
             # -------------------------------------------------------------
         )
         self.dialog.open()
+    def done_check(self,l):
+        self.ids.list.remove_widget(l)
+        self.ids.donelist.add_widget(l)
+        
     def add(self):
         text1=self.content.ids.todotext.text
         text2=self.content.ids.todotext_two.text
+        check=MDListItemTrailingCheckbox(
+            )
         l=MDListItem(
             MDListItemHeadlineText(
                 text=text1,
@@ -68,12 +74,13 @@ class MainScreen(MDScreen):
             MDListItemSupportingText(
                 text=text2,
             ),
-            MDListItemTrailingCheckbox(
-            ),
+            check,
         )
+        check.on_release=lambda x=l:self.done_check(x)
         l.radius=l.height//2
         self.ids.list.add_widget(l)
-        self.dialog.dismiss()
+        self.dialog.dismiss()\
+            
 class MyToDoList(MDApp):
     def build(self):
         return MainScreen()

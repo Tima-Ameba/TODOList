@@ -53,3 +53,14 @@
                 style: "filled"
                 pos: root.width-1.5*self.width,self.height//2
                 on_release: root.show_dialog()
+    MDBottomSheet:
+        MDBottomSheetDragHandle:
+            MDBottomSheetDragHandleTitle:
+                text: "Выполненные задачи"
+                adaptive_height: True
+                pos_hint: {"center_y": .5}
+        ScrollView:
+            do_scroll_x:False
+            do_scroll_y:True
+            MDList:
+                id:donelist
